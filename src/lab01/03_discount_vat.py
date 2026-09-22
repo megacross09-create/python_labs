@@ -1,4 +1,4 @@
-pr, disc, vat = float(input()), float(input()), float(input())
+pr, disc, vat = float(input('price (₽): ')), float(input('discount (%): ')), float(input('vat (%): '))
 base = pr * (1-disc/100)
 vat_am = base * (vat/100)
 tot = base + vat_am
