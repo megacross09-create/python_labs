@@ -1,4 +1,8 @@
 def min_max(nums: list[float | int]) -> tuple[float | int, float | int]:
+    '''Функция возвращает минимум и максимум значений списка nums,
+    который подается на вход.
+    Если список пустой, то возвращает ValueError.
+    '''
     if nums == []:
         raise ValueError #esli pustoy spisok
     minim, maxim = nums[0], nums[0]
@@ -12,12 +16,16 @@ def min_max(nums: list[float | int]) -> tuple[float | int, float | int]:
 # print(min_max([3, -1, 5, 5, 0]))
 # print(min_max([42]))
 # print(min_max([-5, -2, -9]))
-# print(min_max([]))
 # print(min_max([1.5, 2, 2.0, -3.1]))
+# print(min_max([]))
+
 
 
 
 def unique_sorted(nums: list[float | int]) -> list[float | int]:
+    """Функция сортирует поданый на вход список nums,
+    возвращая уникальные значения в порядке возрастания.
+    """
     uniq_nums = []
     for povt in nums:
         if povt not in uniq_nums:
@@ -38,6 +46,9 @@ def unique_sorted(nums: list[float | int]) -> list[float | int]:
 
 
 def flatten(mat: list[list | tuple]) -> list:
+    '''Функция превращает список списков/кортежей в один список по строкам (row-major).
+    Если встречается строка/элемент, который не является списком/кортежем, то функция возвращает TypeError.
+    '''
     # # for a in range(len(mat)):
     # #     if ((type(mat[a]) != list)) or (type(mat[a]) != tuple): raise TypeError #esle ne kortej or list
     for a in range(len(mat)):
