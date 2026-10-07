@@ -5,12 +5,15 @@ def format_record(rec: tuple[str, str, float]) -> str:
     инициалы формируются из 1–2 имён (в верхнем регистре), а лишние пробелы игнорируются;
     проверяется, чтобы gpa был в интервале от нуля до пяти включительно и печатался с 2 знаками.
     """
+    if len(rec) != 3: raise ValueError('Количество элементов в кортеже неверно. Должно быть 3.')
+    if not (type(rec[2]) is float): raise TypeError('Неверный тип данных.')
+    if not type(rec) is tuple: raise TypeError("На вход получен не кортеж.")
     fio, group, gpa = rec
     kuski = fio.split()
     surname = (kuski[0][0]).upper() + (kuski[0])[1:]
     init = ''.join((i[:1].upper() +'.' for i in kuski[1:]))
 
-    if (gpa > 5) or (gpa < 0): raise ValueError('GPA должен быть в интервале от нуля до пяти вкключительно')
+    if (gpa > 5) or (gpa < 0): raise ValueError('GPA должен быть в интервале от нуля до пяти включительно')
     znaki = f'{gpa:.2f}'
 
     return f'{surname} {init}, гр. {group}, GPA {znaki}'
