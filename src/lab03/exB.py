@@ -6,7 +6,7 @@ from src.library.text import *
 
 text = sys.stdin.readline() #mb should use input??
 if text.strip() == "": raise ValueError("Введена пустая строка.")
-# text = "a a a a a a a Привет Привет Привет Привет Привет Привет qwe qwe qwe qwe qwe we we we we e e e r r i "
+# text = "a a a a a a a Привет Привет Привет Привет Привет Привет qwe qwe qwe qwe qwe we we we we e e e r r i"
 norm_text = normalize(text)
 token = tokenize(norm_text)
 freq = count_freq(token)
