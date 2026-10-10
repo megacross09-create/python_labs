@@ -1,4 +1,12 @@
 def normalize(text: str, *, casefold: bool = True, yo2e: bool = True) -> str:
+    """Функция принимает на вход текст, который преобразуется следующим образом:
+    невидимые управляющие символы и двойные пробелы становятся одним пробелом;
+    все символы приводятся к нижнему регистру.
+    Если yo2e = True ('yo to e', т.е. "ё в е"), то буквы "ё"
+    преобразуются в "е".
+    Если casefold = True, то текст преобразуется с помощью casefold;
+    иначе используется lower.
+    """
     if casefold: text = text.casefold()
     else: text = text.lower()
 
@@ -7,29 +15,38 @@ def normalize(text: str, *, casefold: bool = True, yo2e: bool = True) -> str:
     text = text.split()
     ans = ' '.join(text)
     return ans
-print("ПрИвЕт\nМИр\t", '->', normalize("ПрИвЕт\nМИр\t"))
-print("ёжик, Ёлка", '->', normalize("ёжик, Ёлка"))
-print("Hello\r\nWorld", '->', normalize("Hello\r\nWorld"))
-print("  двойные   пробелы  ", '->', normalize("  двойные   пробелы  "))
+# print("ПрИвЕт\nМИр\t", '->', normalize("ПрИвЕт\nМИр\t"))
+# print("ёжик, Ёлка", '->', normalize("ёжик, Ёлка"))
+# print("Hello\r\nWorld", '->', normalize("Hello\r\nWorld"))
+# print("  двойные   пробелы  ", '->', normalize("  двойные   пробелы  "))
 
 def tokenize(text: str) -> list[str]:
+    """Функция разбивает строку на слова по небуквенно-цифровым разделителям.
+    В качестве слова считаются последовательности символов \w (буквы/цифры/подчёркивание),
+    а также дефис внутри слова. Числа также считаются словами.
+    """
     import re
     znaki = r'\w+(?:-\w+)*'
     ans = re.findall(znaki, text)
     return ans
-print("привет мир", '->', tokenize("привет мир"))
-print("hello,world!!!", '->', tokenize("hello,world!!!"))
-print("по-настоящему круто", '->', tokenize("по-настоящему круто"))
-print("2025 год", '->', tokenize("2025 год"))
-print("emoji 😀 не слово", '->', tokenize("emoji 😀 не слово"))
+# print("привет мир", '->', tokenize("привет мир"))
+# print("hello,world!!!", '->', tokenize("hello,world!!!"))
+# print("по-настоящему круто", '->', tokenize("по-настоящему круто"))
+# print("2025 год", '->', tokenize("2025 год"))
+# print("emoji 😀 не слово", '->', tokenize("emoji 😀 не слово"))
 
 def count_freq(tokens: list[str]) -> dict[str, int]:
+    """Функция считает частоты, возвращая словарь вида "слово:количество".
+    """
     d = {}
     for i in tokens: d[i] = d.get(i,0) +1
     return d
 
 
 def top_n(freq: dict[str, int], n: int = 5) -> list[tuple[str, int]]:
+    """Функция возвращает топ-n слов по убыванию.
+    В случае равенства количества слов функция возвращает по алфавиту.
+    """
     # freq = count_freq(freq)
     # for i in range(len(freq)):
     #     if freq.get(i) == freq.get(i+1):
@@ -39,7 +56,7 @@ def top_n(freq: dict[str, int], n: int = 5) -> list[tuple[str, int]]:
     items = freq.items()
     ans = sorted(items, key = lambda p: (-p[1], p[0]))
     return ans[:n]
-print(["a","b","a","c","b","a"], '->', count_freq(["a","b","a","c","b","a"]))
-print(["a","b","a","c","b","a"], '->', top_n(count_freq(["a","b","a","c","b","a"])))
-print(["bb","aa","bb","aa","cc"], '->', count_freq(["bb","aa","bb","aa","cc"]))
-print(["bb","aa","bb","aa","cc"], '->', top_n(count_freq(["bb","aa","bb","aa","cc"])))
+# print(["a","b","a","c","b","a"], '->', count_freq(["a","b","a","c","b","a"]))
+# print(["a","b","a","c","b","a"], '->', top_n(count_freq(["a","b","a","c","b","a"])))
+# print(["bb","aa","bb","aa","cc"], '->', count_freq(["bb","aa","bb","aa","cc"]))
+# print(["bb","aa","bb","aa","cc"], '->', top_n(count_freq(["bb","aa","bb","aa","cc"])))
