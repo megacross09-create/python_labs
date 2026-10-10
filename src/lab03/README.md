@@ -15,6 +15,7 @@ def normalize(text: str, *, casefold: bool = True, yo2e: bool = True) -> str:
     return ans
 ```
 Пример работы:
+
 ![](../../images/lab03/normalize.png)
 
 Функция tokenize:
@@ -26,6 +27,7 @@ def tokenize(text: str) -> list[str]:
     return ans
 ```
 Пример работы:
+
 ![](../../images/lab03/tokenize.png)
 
 Функция count_freq:
@@ -50,11 +52,13 @@ def top_n(freq: dict[str, int], n: int = 5) -> list[tuple[str, int]]:
     return ans[:n]
 ```
 Пример работы:
+
 ![](../../images/lab03/last.png)
 
 ## Задание B
 ### Скрипт читает одну строку текста из stdin, после чего вызывает функции из библиотеки library/text.py и печатает количество всех слов, количество уникальных слов и топ-5 слов по количеству в порядке убывания в виде "слово:количество"
 
 Пример работы:
+
 ![](../../images/lab03/exB1.png)
 ![](../../images/lab03/exB2.png)
