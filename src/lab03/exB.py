@@ -1,7 +1,7 @@
-from ..library.text import normalize
+from src.library.text import normalize
 import sys
 
-text = sys.stdin.read()
+text = sys.stdin.readline() #mb should use input??
 if text.strip() == "": raise ValueError("Введена пустая строка.")
 
 N = normalize(text)
