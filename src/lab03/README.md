@@ -3,7 +3,7 @@
 ## Задание А
 ### Реализовал функции normalize, tokenize, count_freq, top_n
 Функция normalize:
-def normalize(text: str, *, casefold: bool = True, yo2e: bool = True) -> str:
+'''def normalize(text: str, *, casefold: bool = True, yo2e: bool = True) -> str:
     if casefold: text = text.casefold()
     else: text = text.lower()
 
@@ -11,7 +11,7 @@ def normalize(text: str, *, casefold: bool = True, yo2e: bool = True) -> str:
 
     text = text.split()
     ans = ' '.join(text)
-    return ans
+    return ans'''
 
 Функция tokenize:
 def tokenize(text: str) -> list[str]:
