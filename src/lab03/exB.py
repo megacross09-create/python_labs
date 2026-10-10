@@ -1,4 +1,4 @@
-from src.library.text import *
+from ..library.text import normalize
 import sys
 
 text = sys.stdin.read()
