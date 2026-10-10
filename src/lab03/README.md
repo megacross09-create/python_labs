@@ -14,6 +14,9 @@ def normalize(text: str, *, casefold: bool = True, yo2e: bool = True) -> str:
     ans = ' '.join(text)
     return ans
 ```
+Пример работы:
+![](../../images/lab03/normalize.png)
+
 Функция tokenize:
 ```python
 def tokenize(text: str) -> list[str]:
@@ -22,6 +25,8 @@ def tokenize(text: str) -> list[str]:
     ans = re.findall(znaki, text)
     return ans
 ```
+Пример работы:
+![](../../images/lab03/tokenize.png)
 
 Функция count_freq:
 ```python
@@ -30,6 +35,7 @@ def count_freq(tokens: list[str]) -> dict[str, int]:
     for i in tokens: d[i] = d.get(i,0) +1
     return d
 ```
+
 Функция top_n:
 ```python
 def top_n(freq: dict[str, int], n: int = 5) -> list[tuple[str, int]]:
@@ -43,3 +49,5 @@ def top_n(freq: dict[str, int], n: int = 5) -> list[tuple[str, int]]:
     ans = sorted(items, key = lambda p: (-p[1], p[0]))
     return ans[:n]
 ```
+Пример работы:
+![](../../images/lab03/count_freq and top_n.png)
