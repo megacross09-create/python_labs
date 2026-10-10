@@ -50,4 +50,4 @@ def top_n(freq: dict[str, int], n: int = 5) -> list[tuple[str, int]]:
     return ans[:n]
 ```
 Пример работы:
-![](../../images/lab03/count_freq and top_n.png)
+![](../../images/lab03/last.png)
