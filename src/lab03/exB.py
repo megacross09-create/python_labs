@@ -12,7 +12,7 @@ token = tokenize(norm_text)
 freq = count_freq(token)
 
 N = sum(freq.values()) #or i could use 'len(token)' instead
-K = len(set(token)) #or i could use 'len(freq)' instaed
+K = len(set(token)) #or i could use 'len(freq)' instead
 a = top_n(freq, n=5)
 
 print(f"Всего слов: {N}")

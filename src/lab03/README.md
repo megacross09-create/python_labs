@@ -57,7 +57,29 @@ def top_n(freq: dict[str, int], n: int = 5) -> list[tuple[str, int]]:
 
 ## Задание B
 ### Скрипт читает одну строку текста из stdin, после чего вызывает функции из библиотеки library/text.py и печатает количество всех слов, количество уникальных слов и топ-5 слов по количеству в порядке убывания в виде "слово:количество"
+```python
+import sys 
+'''"python -m src.lab03.exB" (ввести в терминал,
+    а потом через Ctrl+Z и Enter закончить(если винда, если нет, то Ctrl+D))'''
 
+from src.library.text import *
+
+text = sys.stdin.readline() #mb should use input??
+if text.strip() == "": raise ValueError("Введена пустая строка.")
+norm_text = normalize(text)
+token = tokenize(norm_text)
+freq = count_freq(token)
+
+N = sum(freq.values()) #or i could use 'len(token)' instead
+K = len(set(token)) #or i could use 'len(freq)' instead
+a = top_n(freq, n=5)
+
+print(f"Всего слов: {N}")
+print(f'Уникальных слов: {K}')
+print('Топ-5:')
+for w, c in a:
+    print(f'{w}:{c}')
+```
 Пример работы:
 
 ![](../../images/lab03/exB1.png)
