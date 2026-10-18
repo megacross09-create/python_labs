@@ -1,6 +1,6 @@
 import sys 
 '''"python -m src.lab03.exB" (ввести в терминал,
-    а потом через Ctrl+Z и Enter закончить(если винда, если нет, то Ctrl+D))'''
+    а потом через Ctrl+Z и Enter закончить(если винда; если нет, то Ctrl+D))'''
 
 from src.library.text import *
 
