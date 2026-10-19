@@ -12,7 +12,6 @@ def read_text(path: str | Path, encoding: str = "utf-8") -> str:
 # print(read_text('data/lab04/input1.txt'))
 # print(read_text('data/lab04/input2.txt'))
 
-
 import csv
 from typing import Iterable, Sequence
 
