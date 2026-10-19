@@ -2,7 +2,7 @@ from src.library.text import normalize, tokenize, count_freq, top_n
 from src.lab04.io_txt_csv import read_text, write_csv
 import sys
 try:
-    reading_text = read_text('data/lab04/input.txt')
+    reading_text = read_text('data/lab04/input_cp1251.txt')
 except FileNotFoundError:
     print('Файл не существует')
     sys.exit(1)

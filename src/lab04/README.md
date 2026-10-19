@@ -39,4 +39,10 @@ def write_csv(rows: Iterable[Sequence], path: str | Path, header: tuple[str, ...
 ![](../../images/lab04/test_case_csv.png)
 
 ## Задание B
-### Написал скрипт, который читает текст(ы) из файлов, считает частоты и сохраняет отчёты.
+### Написал скрипт, который читает текст(ы) из файлов, считает частоты и сохраняет отчёты. Если был пустой файл, то report.csv содержит только заголовок word, count
+Один файл (база)
+![](../../images/lab04/text_report.png)
+Пустой файл
+![](../../images/lab04/empty_file.png)
+Кодировка cp1251
+![](../../images/lab04/cp1251.png)
