@@ -16,6 +16,15 @@ import csv
 from typing import Iterable, Sequence
 
 def write_csv(rows: Iterable[Sequence], path: str | Path, header: tuple[str, ...] | None = None) -> None:
+    '''Скрипт читает один входной файл (путь к входному файлу по умолчанию захардкожен (data/lab04/input.txt),
+    текст читается в кодировке utf-8. При отсутствии файла программа завершается с кодом 1 и выводом ошибки в консоль».
+    Нормализует текст (lib/text.py), токенизирует и считает частоты слов. Посл сохраняет data/report.csv c колонками:
+    word,count, отсортированными: count ↓, слово ↑ (при равенстве).В консоль печатает краткое резюме:
+    
+    "Всего слов:
+    Уникальных слов:
+    Топ-5:
+    '''
     p = Path(path)
     rows = list(rows)
     #added strt
