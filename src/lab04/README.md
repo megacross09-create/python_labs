@@ -20,11 +20,15 @@ def read_text(path: str | Path, encoding: str = "utf-8") -> str:
 Функция write_csv:
 ```python
 def write_csv(rows: Iterable[Sequence], path: str | Path, header: tuple[str, ...] | None = None) -> None:
-    '''
+    '''Создает или перезаписывает CSV-файл с разделителем-запятой.
+    Если передан header, он записывается в файл первой строкой.
+    При передаче пустого набора rows и наличии header файл будет содержать
+    только строку заголовка; если header=None и rows пуст, создается пустой файл.
+    Если строки внутри rows имеют разную длину или количество элементов
+    в строках не совпадает с длиной заголовка header, то ValueError.
     '''
     p = Path(path)
     rows = list(rows)
-    #added strt
     if rows:
         first_len = len(rows[0])
         if header is not None and len(header) != first_len:
@@ -32,7 +36,6 @@ def write_csv(rows: Iterable[Sequence], path: str | Path, header: tuple[str, ...
         for r in rows:
             if len(r) != first_len:
                 raise ValueError("Несовпадение длины строк. Все строки в rows должны иметь одинаковую длину")
-    #added end
     with p.open("w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
         if header is not None:
