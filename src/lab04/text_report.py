@@ -9,7 +9,7 @@ except FileNotFoundError:
 normalized_text = normalize(reading_text)
 tokenized_text = tokenize(normalized_text)
 counted_text = count_freq(tokenized_text)
-top-ned_text = top_n(counted_text)
+top_ned_text = top_n(counted_text)
 # print(reading_text,'\n',normalized_text,'\n',tokenized_text,'\n',counted_text)
 
 write_csv(counted_text, 'data/lab04/report.csv', header= ('word', 'count'))
