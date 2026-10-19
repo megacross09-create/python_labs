@@ -39,4 +39,4 @@ def write_csv(rows: Iterable[Sequence], path: str | Path, header: tuple[str, ...
 ![](../../images/lab04/test_case_csv.png)
 
 ## Задание B
-### Написал скрипт,
+### Написал скрипт, который читает текст(ы) из файлов, считает частоты и сохраняет отчёты.
