@@ -5,6 +5,11 @@
 Функция read_text:
 ```python
 def read_text(path: str | Path, encoding: str = "utf-8") -> str:
+    '''Читает текстовый файл и возвращает его содержимое (как одну строку).
+    По умолчанию используется кодировка'utf-8'.
+    Если исходный файл сохранен в другой кодировке, укажите нужную явно
+    (например, encoding="cp1251").
+    '''
     p = Path(path)
     return p.read_text(encoding=encoding)
 ```
@@ -15,6 +20,8 @@ def read_text(path: str | Path, encoding: str = "utf-8") -> str:
 Функция write_csv:
 ```python
 def write_csv(rows: Iterable[Sequence], path: str | Path, header: tuple[str, ...] | None = None) -> None:
+    '''
+    '''
     p = Path(path)
     rows = list(rows)
     #added strt
@@ -39,7 +46,6 @@ def write_csv(rows: Iterable[Sequence], path: str | Path, header: tuple[str, ...
 ![](../../images/lab04/test_case_csv.png)
 
 ## Задание B
-### Написал скрипт, который читает текст(ы) из файлов, считает частоты и сохраняет отчёты. Если был пустой файл, то report.csv содержит только заголовок word, count
 ### Скрипт читает один входной файл (путь к входному файлу по умолчанию захардкожен (data/lab04/input.txt), текст читается в кодировке utf-8. При отсутствии файла программа завершается с кодом 1 и выводом ошибки в консоль». Нормализует текст (lib/text.py), токенизирует и считает частоты слов. Посл сохраняет data/report.csv c колонками: word,count, отсортированными: count ↓, слово ↑ (при равенстве).В консоль печатает краткое резюме:
 ####     "Всего слов:
 ####     Уникальных слов:
@@ -50,7 +56,7 @@ from src.library.text import normalize, tokenize, count_freq, top_n
 from src.lab04.io_txt_csv import read_text, write_csv
 import sys
 try:
-    reading_text = read_text('data/lab04/input_cp1251.txt')
+    reading_text = read_text('data/lab04/input.txt')
 except FileNotFoundError:
     print('Файл не существует')
     sys.exit(1)
