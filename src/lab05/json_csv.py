@@ -55,15 +55,15 @@ def csv_to_json(csv_path: str, json_path: str) -> None:
     with p_in.open("r", encoding="utf-8", newline="") as f:
         reader = csv.DictReader(f)
         if reader.fieldnames is None:
-            raise ValueError("CSV без заголовка или пустой")
+            raise ValueError("CSV без заголовка или пуст")
 
         rows = list(reader)
 
     if not rows:
-        raise ValueError("CSV без заголовка или пустой")
+        raise ValueError("CSV без заголовка или пуст")
 
     Path(csv_path).parent.mkdir(parents=True, exist_ok=True)
-    
+
     with p_out.open("w", encoding="utf-8") as f:
         json.dump(rows, f, ensure_ascii=False, indent=2)
     return None
