@@ -1,67 +1,24 @@
 # ЛР5 — JSON и конвертации (JSON↔CSV, CSV→XLSX)
 
-
-## Описание работы
-
-Реализованы модули для двусторонней конвертации данных между форматами JSON, CSV и XLSX. Функции являются «чистыми»
-— не производят вывод в `stdout`, работают исключительно с файловой системой и валидируют входные данные.
-
----
-
-## Зависимости
-
-Для работы с форматом XLSX используется библиотека `openpyxl`. Все остальные используемые модули (`json`, `csv`, `pathlib`)
-входят в стандартную библиотеку Python.
-
-Установка зависимостей из корня репозитория:
-
-```bash
-pip install -r requirements.txt
-
-```
-
-Содержимое `requirements.txt`:
-
-```text
-openpyxl==3.1.5
-
-```
-
----
-
 ## Задание А — JSON ↔ CSV
 
-Реализован модуль `src/lab05/json_csv.py` с функциями `json_to_csv` и `csv_to_json`.
+Реализовал модуль `src/lab05/json_csv.py` с чистыми функциями `json_to_csv` и `csv_to_json`.
+Функции не производят вывод в `stdout`, работают строго с кодировкой UTF-8 и валидируют входные данные.
 
-### Особенности реализации и допущения:
-
-1. **Порядок колонок (JSON → CSV):** формируется на основе порядка ключей первого объекта с добавлением уникальных ключей из последующих записей.
-
-
-2. **Отсутствующие поля (JSON → CSV):** если у объекта отсутствует ключ, имеющийся в заголовке таблицы, поле заполняется пустой строкой `""` (через параметр `restval=""` в `csv.DictWriter`).
-
-
-3. **Сохранение типов (CSV → JSON):** в соответствии с ТЗ и спецификой CSV (все данные читаются как текст), значения при экспорте в JSON сохраняются строками.
-
-
-4. **Форматирование JSON:** запись выполняется с параметрами `ensure_ascii=False` (для сохранения читаемой кириллицы) и `indent=2` (для структурированного отступа).
-
-
-
-### Исходный код `src/lab05/json_csv.py`:
+### Функция json_to_csv:
 
 ```python
-import csv
-import json
-from pathlib import Path
-
-
 def json_to_csv(json_path: str, csv_path: str) -> None:
     """Преобразует JSON-файл в CSV.
 
     Поддерживает список словарей [{...}, {...}], заполняет отсутствующие
-    поля пустыми строками. Порядок колонок формируется по первому объекту.
+    поля пустыми строками. Порядок колонок формируется по ключам первого объекта
+    с добавлением уникальных ключей из последующих записей.
     Кодировка строго UTF-8.
+
+    Исключения:
+        FileNotFoundError: Если входной файл не существует.
+        ValueError: Если JSON пустой, содержит не словари или поврежден.
     """
     p_in = Path(json_path)
     p_out = Path(csv_path)
@@ -75,7 +32,6 @@ def json_to_csv(json_path: str, csv_path: str) -> None:
     except json.JSONDecodeError as err:
         raise ValueError(f"Некорректный JSON-файл: {err.msg}") from err
 
-    # Валидация структуры: непустой список словарей
     if (
         not isinstance(data, list)
         or len(data) == 0
@@ -83,7 +39,6 @@ def json_to_csv(json_path: str, csv_path: str) -> None:
     ):
         raise ValueError("Пустой JSON или неподдерживаемая структура")
 
-    # Сбор уникальных ключей с сохранением порядка первого объекта
     fieldnames: list[str] = []
     for row in data:
         for key in row.keys():
@@ -96,13 +51,21 @@ def json_to_csv(json_path: str, csv_path: str) -> None:
         writer.writeheader()
         writer.writerows(data)
 
+```
 
+### Функция csv_to_json:
+
+```python
 def csv_to_json(csv_path: str, json_path: str) -> None:
     """Преобразует CSV в JSON (список словарей).
 
     Заголовок обязателен, значения сохраняются как строки.
-    Используется json.dump(..., ensure_ascii=False, indent=2).
+    Запись выполняется с параметрами ensure_ascii=False, indent=2.
     Кодировка строго UTF-8.
+
+    Исключения:
+        FileNotFoundError: Если входной CSV-файл не существует.
+        ValueError: Если файл пустой или не содержит строки заголовка.
     """
     p_in = Path(csv_path)
     p_out = Path(json_path)
@@ -124,53 +87,69 @@ def csv_to_json(csv_path: str, json_path: str) -> None:
     with p_out.open("w", encoding="utf-8") as f:
         json.dump(rows, f, ensure_ascii=False, indent=2)
 
+```
 
-if __name__ == "__main__":
-    json_to_csv("data/samples/people.json", "data/out/people_from_json.csv")
-    csv_to_json("data/samples/people.csv", "data/out/people_from_csv.json")
-    print("Конвертации JSON <-> CSV успешно завершены.")
+### Пример работы:
+
+```powershell
+PS C:\Users\Admin\Desktop\python_labs> py -m src.lab05.json_csv
+Конвертации JSON <-> CSV успешно выполнены.
 
 ```
 
-### Команда запуска:
+**1. JSON → CSV (`data/samples/people.json` → `data/out/people_from_json.csv`):**
 
-```bash
-python -m src.lab05.json_csv
+```csv
+name,age,city
+Alice,22,SPB
+Bob,25,Moscow
 
 ```
+
+**2. CSV → JSON (`data/samples/people.csv` → `data/out/people_from_csv.json`):**
+
+```json
+[
+  {
+    "name": "Alice",
+    "age": "22",
+    "city": "SPB"
+  },
+  {
+    "name": "Bob",
+    "age": "25",
+    "city": "Moscow"
+  }
+]
+
+```
+
+**Примечание по структуре и типам данных:**
+
+* Порядок колонок при формировании CSV строится по первому объекту, пропущенные поля дополняются пустой строкой `""` через `restval=""`.
+* При чтении CSV все значения из `DictReader` поступают в виде строк, поэтому в выходном JSON числа остаются строковыми полями (`"age": "22"`),
+что полностью соответствует специфике плоских CSV-таблиц.
+* Запись JSON выполняется с `ensure_ascii=False` (для сохранения читаемой кириллицы) и `indent=2`.
 
 ---
 
 ## Задание Б — CSV → XLSX
 
-Реализован модуль `src/lab05/csv_xlsx.py` с функцией `csv_to_xlsx`.
+Реализовал модуль `src/lab05/csv_xlsx.py` с функцией `csv_to_xlsx`, использующей библиотеку `openpyxl` (зафиксирована в `requirements.txt`).
 
-### Особенности реализации:
-
-1. **Имя листа:** по умолчанию создаётся лист с именем `"Sheet1"`.
-
-
-2. **Шапка таблицы:** первая строка CSV-файла переносится в качестве заголовка.
-
-
-3. **Автоширина колонок:** вычисляется по формуле `max(длина_текста + 3, 8)`. Это предотвращает скрытие текста фильтрами ячеек Excel и удовлетворяет условию «не менее 8 символов».
-
-
-
-### Исходный код `src/lab05/csv_xlsx.py`:
+### Функция csv_to_xlsx:
 
 ```python
-import csv
-from pathlib import Path
-
-from openpyxl import Workbook
-
-
 def csv_to_xlsx(csv_path: str, xlsx_path: str) -> None:
     """Конвертирует CSV в XLSX с автоматической шириной колонок (не менее 8 символов).
 
-    Первая строка принимается за заголовок. Лист называется 'Sheet1'.
+    Первая строка таблицы переносится как заголовок.
+    Имя листа по умолчанию — 'Sheet1'.
     Кодировка строго UTF-8.
+
+    Исключения:
+        FileNotFoundError: Если CSV-файл не найден.
+        ValueError: Если файл пустой или не содержит строк.
     """
     p_in = Path(csv_path)
     p_out = Path(xlsx_path)
@@ -192,7 +171,7 @@ def csv_to_xlsx(csv_path: str, xlsx_path: str) -> None:
     for row in rows:
         ws.append(row)
 
-    # Расчет автоширины колонок по максимальной длине строки в ячейках
+    # Автоподбор ширины колонок по максимальной длине содержимого ячеек
     for col in ws.columns:
         max_len = max(len(str(cell.value or "")) for cell in col)
         col_letter = col[0].column_letter
@@ -201,116 +180,36 @@ def csv_to_xlsx(csv_path: str, xlsx_path: str) -> None:
     p_out.parent.mkdir(parents=True, exist_ok=True)
     wb.save(p_out)
 
+```
 
-if __name__ == "__main__":
-    csv_to_xlsx("data/samples/people.csv", "data/out/people.xlsx")
-    csv_to_xlsx("data/samples/cities.csv", "data/out/cities.xlsx")
-    print("Конвертация CSV -> XLSX успешно завершена.")
+### Пример работы:
+
+```powershell
+PS C:\Users\Admin\Desktop\python_labs> py -m src.lab05.csv_xlsx
+Конвертация CSV -> XLSX успешно выполнена.
 
 ```
 
-### Команда запуска:
+**Проверка сгенерированных таблиц (`people.xlsx`, `cities.xlsx`):**
 
-```bash
-python -m src.lab05.csv_xlsx
+* Лист таблицы корректно назван `Sheet1`.
+* Данные выровнены, колонки не сжаты: ширина каждой колонки адаптирована под самый длинный текст с запасом `+3` символа (и не менее 8).
 
-```
+*(Сюда вставьте скриншот открытого в Excel/LibreOffice файла people.xlsx)*
 
----
-
-## Сценарии демонстрации и проверка результатов
-
-### Сценарий 1: JSON → CSV
-
-* **Входные данные (`data/samples/people.json`):**
-
-
-
-```json
-[
-  {"name": "Alice", "age": 22, "city": "SPB"},
-  {"name": "Bob", "age": 25, "city": "Moscow"}
-]
-
-```
-
-* **Результат (`data/out/people_from_json.csv`):**
-
-
-
-```csv
-name,age,city
-Alice,22,SPB
-Bob,25,Moscow
-
-```
-
-* **Проверка:** Заголовок сохранён, порядок колонок соответствует полям объектов, количество строк совпадает с количеством элементов списка.
-
-
-
-### Сценарий 2: CSV → JSON
-
-* **Входные данные (`data/samples/people.csv`):**
-
-
-
-```csv
-name,age,city
-Alice,22,SPB
-Bob,25,Moscow
-
-```
-
-* **Результат (`data/out/people_from_csv.json`):**
-
-
-
-```json
-[
-  {
-    "name": "Alice",
-    "age": "22",
-    "city": "SPB"
-  },
-  {
-    "name": "Bob",
-    "age": "25",
-    "city": "Moscow"
-  }
-]
-
-```
-
-* **Проверка:** Ключи объектов соответствуют заголовку CSV, значения сохранены строками, число объектов равно числу строк данных в CSV.
-
-
-
-### Сценарий 3: CSV → XLSX
-
-* **Входные данные:** `data/samples/people.csv` и `data/samples/cities.csv`.
-
-
-* **Результат:** `data/out/people.xlsx` и `data/out/cities.xlsx`.
-
-
-* **Проверка структуры:** Файлы открываются без ошибок в Excel / LibreOffice, активный лист имеет имя `"Sheet1"`, ширина колонок адаптирована под длину текста содержимого.
-
-
-
-*(Сюда прикрепите скриншот открытого Excel-файла)*
 `![Проверка XLSX](../../images/lab05/xlsx_check.png)`
 
 ---
 
-## Валидация и краевые случаи
+## Краевые случаи и валидация
 
-В коде реализована обработка исключительных ситуаций согласно требованиям ТЗ:
+В соответствии с требованиями ТЗ обработаны следующие исключительные ситуации:
 
-* **Файл не существует:** генерируется исключение `FileNotFoundError`.
+* **Файл отсутствует:** выбрасывается `FileNotFoundError` (не перехватывается молча, пути проверяются через `exists()`).
+* **Пустой входной JSON / не список словарей:** выбрасывается `ValueError("Пустой JSON или неподдерживаемая структура")`.
+* **Битый JSON-файл:** ошибка парсинга `json.JSONDecodeError` перехватывается и оборачивается в понятный `ValueError`.
+* **Пустой CSV или файл без заголовков:** выбрасывается `ValueError("CSV без заголовка или пустой")`.
 
+```
 
-* **Пустой JSON / список с не-словарями / пустой CSV:** выбрасывается `ValueError("Пустой JSON или неподдерживаемая структура")` или `ValueError("CSV без заголовка или пустой")`.
-
-
-* **Битый синтаксис JSON:** перехватывается `json.JSONDecodeError` и выбрасывается `ValueError` с описанием ошибки.
+```
