@@ -62,10 +62,12 @@ def csv_to_json(csv_path: str, json_path: str) -> None:
     if not rows:
         raise ValueError("CSV без заголовка или пустой")
 
-    ensure_parent_dir(p_out)
+    Path(csv_path).parent.mkdir(parents=True, exist_ok=True)
+    
     with p_out.open("w", encoding="utf-8") as f:
         json.dump(rows, f, ensure_ascii=False, indent=2)
     return None
+
 if __name__ == "__main__":
     #демо запуск конвертаций по тз
     json_to_csv("data/samples/people.json", "data/out/people_from_json.csv")
