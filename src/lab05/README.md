@@ -152,4 +152,9 @@ if __name__ == "__main__":
 Файл отсутствует: выбрасывается FileNotFoundError (не перехватывается молча, пути проверяются через exists()). ![](../../images/lab05/.png)
 Пустой входной JSON / не список словарей: выбрасывается ValueError("Пустой JSON или неподдерживаемая структура"). ![](../../images/lab05/.png)
 Битый JSON-файл: ошибка парсинга json.JSONDecodeError перехватывается и оборачивается в понятный ValueError. ![](../../images/lab05/.png)
-Пустой CSV или файл без заголовков: выбрасывается ValueError("CSV без заголовка или пустой"). ![](../../images/lab05/.png)![](../../images/lab05/.png)
+Пустой CSV или файл без заголовков: выбрасывается ValueError("CSV без заголовка или пустой"). ![](../../images/lab05/.png)
+
+## Изначальные файлы (сэмплы)
+![smthsmthsmth](../../images/lab05/sample_city.png)
+![smthsmthsmth](../../images/lab05/sample_people_csv.png)
+![smthsmthsmth](../../images/lab05/sample_people_json.png)
