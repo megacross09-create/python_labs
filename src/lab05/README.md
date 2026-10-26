@@ -45,7 +45,7 @@ def json_to_csv(json_path: str, csv_path: str) -> None:
     return None
 ```
 ### Пример работы:
-![](../../images/lab05/people_from_json.png)
+![пример в цсв из json](../../images/lab05/people_from_json.png)
 
 ### Функция csv_to_json:
 
@@ -88,7 +88,7 @@ if __name__ == "__main__":
 ```
 
 ### Пример работы:
-![](../../images/lab05/people_from_csv.png)
+![пример в json из цсв](../../images/lab05/people_from_csv.png)
 
 ## Задание B — CSV → XLSX
 
@@ -145,16 +145,24 @@ if __name__ == "__main__":
 ```
 
 ### Пример работы:
-![](../../images/lab05/people_to_xlsx.png)
+![пример в xlsx из цсв](../../images/lab05/people_to_xlsx.png)
 
 ## Краевые случаи и валидация
 ### В соответствии с требованиями ТЗ обработаны следующие исключительные ситуации:
-Файл отсутствует: выбрасывается FileNotFoundError (не перехватывается молча, пути проверяются через exists()). ![](../../images/lab05/.png)
-Пустой входной JSON / не список словарей: выбрасывается ValueError("Пустой JSON или неподдерживаемая структура"). ![](../../images/lab05/.png)
-Битый JSON-файл: ошибка парсинга json.JSONDecodeError перехватывается и оборачивается в понятный ValueError. ![](../../images/lab05/.png)
-Пустой CSV или файл без заголовков: выбрасывается ValueError("CSV без заголовка или пустой"). ![](../../images/lab05/.png)
+Файл отсутствует: выбрасывается FileNotFoundError (не перехватывается молча, пути проверяются через exists()).
+![пример если нет файла](../../images/lab05/error_NOfile_from_json.png)
+
+Пустой входной JSON / не список словарей: выбрасывается ValueError("Пустой JSON или неподдерживаемая структура").
+![пример если с жсоном что-то не то](../../images/lab05/error_empty_json.png)
+
+Битый JSON-файл: ошибка парсинга json.JSONDecodeError перехватывается и оборачивается в понятный ValueError.
+![пример если жсон битый](../../images/lab05/error_damaged_json.png)
+
+Пустой CSV или файл без заголовков: выбрасывается ValueError("CSV без заголовка или пуст").
+![пример если цсв пуст](../../images/lab05/error_NOfile_from_csv.png)
+![пример если нет заголовка](../../images/lab05/error_empty_json.png)
 
 ## Изначальные файлы (сэмплы)
-![smthsmthsmth](../../images/lab05/sample_city.png)
-![smthsmthsmth](../../images/lab05/sample_people_csv.png)
-![smthsmthsmth](../../images/lab05/sample_people_json.png)
+![сэмпл](../../images/lab05/sample_city.png)
+![сэмпл](../../images/lab05/sample_people_csv.png)
+![сэмпл](../../images/lab05/sample_people_json.png)
