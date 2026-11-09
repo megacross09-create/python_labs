@@ -41,3 +41,4 @@ top_n() — сортировка и выбор наиболее частых с�
 ### Подкоманда csv2xlsx преобразует CSV в XLSX
 ![](../../images/lab06/cities_csv_sample.png)
 ![](../../images/lab06/cities_xlsx_out.png)
+![](../../images/lab06/cli_convert_help.png)
