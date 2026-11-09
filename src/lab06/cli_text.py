@@ -4,6 +4,10 @@ import sys
 from src.lab03.exA import tokenize, top_n, count_freq, normalize
 
 def main():
+    """
+    Вывод содержимого с нумерацией строк (cat + флажок -n). Вывод частот слов (stats + --top n)
+    В случае отсутствия файла - FileNotFoundError.
+    """
     parser = argparse.ArgumentParser(description="CLI‑утилиты лабораторной №6")
     subparsers = parser.add_subparsers(dest="command")
 
