@@ -8,7 +8,7 @@ def main():
     Конвертация json в csv, csv в json, csv в xlsx.
     """
     parser = argparse.ArgumentParser(description="Конвертеры данных")
-    sub = parser.add_subparsers(dest="cmd")
+    sub = parser.add_subparsers(dest="cmd", required=True)
 
     p1 = sub.add_parser("json2csv", help='Конвертация из json в csv формат')
     p1.add_argument("--in", dest="input", required=True, help='Файл json на вход')
@@ -29,9 +29,12 @@ def main():
     """
 
 
-    if args.command == 'json2csv':
+    if args.cmd == 'json2csv':
         json_to_csv(args.input, args.output)
-    if args.command == 'csv2json':
+    if args.cmd == 'csv2json':
         csv_to_json(args.input, args.output)
-    if args.command == 'csv2xlsx':
+    if args.cmd == 'csv2xlsx':
         csv_to_xlsx(args.input, args.output)
+
+if __name__=='__main__':
+    main()
