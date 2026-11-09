@@ -1,6 +1,7 @@
 import argparse
 from src.lab05.json_csv import json_to_csv, csv_to_json
 from src.lab05.csv_xlsx import csv_to_xlsx
+from pathlib import Path
 
 def main():
     """
@@ -23,9 +24,6 @@ def main():
 
     args = parser.parse_args()
 
-    if not args.cmd:
-        parser.print_help()
-        return
     """
         Вызываем код в зависимости от аргументов.
     """
@@ -37,7 +35,3 @@ def main():
         csv_to_json(args.input, args.output)
     if args.command == 'csv2xlsx':
         csv_to_xlsx(args.input, args.output)
-
-
-if __name__ == '__main__':
-    main()
