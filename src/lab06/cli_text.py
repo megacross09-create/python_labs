@@ -15,7 +15,7 @@ def main():
     # подкоманда stats
     stats_parser = subparsers.add_parser("stats", help="Частоты слов")
     stats_parser.add_argument("--input", required=True, help='Входной файл в формате .txt')
-    stats_parser.add_argument("--top", type=int, default=5, help='')
+    stats_parser.add_argument("--top", type=int, default=5, help='Частоты слов')
 
     args = parser.parse_args()
 
@@ -24,8 +24,8 @@ def main():
         parser.print_help()
         return
 
-    input_path = Path(args.input) #отсутсвие файла
-    if not input_path.is_file(): raise FileNotFoundError(f'Файл не найден: {args.input}')
+    input_path = Path(args.input) 
+    if not input_path.is_file(): raise FileNotFoundError(f'Файл не найден: {args.input}') #отсутсвие файла
     
     if args.command == "cat":
         """ Реализация команды cat """
@@ -40,7 +40,7 @@ def main():
 
     elif args.command == "stats":
         """ Реализация команды stats """
-        if args.top < 1:
+        if int(args.top) < 1:
             parser.error('Параметр --top должен быть положителен')
 
         text = input_path.read_text(encoding='utf-8')
@@ -49,11 +49,11 @@ def main():
         freq = count_freq(token)
         N = sum(freq.values()) #or i could use 'len(token)' instead
         K = len(set(token)) #or i could use 'len(freq)' instead
-        a = top_n(freq, n=5)
+        a = top_n(freq, n=int(args.top))
 
         print(f"Всего слов: {N}")
         print(f'Уникальных слов: {K}')
-        print('Топ-5:')
+        print(f'Топ-{int(args.top)}:')
         for w, c in a:
             print(f'{w}:{c}')
 
