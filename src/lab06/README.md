@@ -1,4 +1,4 @@
-# ЛР6 — CLI‑утилиты с argparse (cat/grep‑lite + конвертеры): Техническое задание
+# ЛР6 — CLI‑утилиты с argparse (cat/grep‑lite + конвертеры)
 ## Задание cli_text
 Содержит подкоманды stats, cat
 
