@@ -75,7 +75,7 @@ py -m src.lab07.bench
 | two_sum | 10000 | two_sum_brute | 1.535196 |
 | two_sum | 10000 | two_sum_fast | 0.001001 |
 
-![таблица бенчмарка](images/lab07/bench.png)
+![таблица бенчмарка](../../images/lab07/bench.png)
 
 ## Выводы
 
